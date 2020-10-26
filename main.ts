@@ -2,6 +2,8 @@ radio.setTransmitPower(7)
 radio.setGroup(99)
 let packetsRCVD = 0
 let sumRSSI = 0
+//         serial.write_value("SUCCESS RATE", packetsRCVD/1000)
+//         serial.write_value("AVERAGE RSSI", sumRSSI/packetsRCVD)
 radio.onReceivedValue(function on_received_value(name: string, value: number) {
     let rssi: number;
     
@@ -13,11 +15,9 @@ radio.onReceivedValue(function on_received_value(name: string, value: number) {
         rssi = radio.receivedPacket(RadioPacketProperty.SignalStrength)
         packetsRCVD = packetsRCVD + 1
         sumRSSI = sumRSSI + rssi
-        serial.writeValue("SUCCESS %", packetsRCVD / value)
+        serial.writeLine("SUXS " + ("" + packetsRCVD / 1000) + " RSSI(AVG):" + ("" + sumRSSI / packetsRCVD))
     } else if (name == "ENDSYNC") {
-        serial.writeLine("")
-        serial.writeValue("SUCCESS RATE", packetsRCVD / 1000)
-        serial.writeValue("AVERAGE RSSI", sumRSSI / packetsRCVD)
+        serial.writeLine("SR:" + ("" + packetsRCVD / 1000) + " PCK:" + ("" + packetsRCVD) + " RSSI:" + sumRSSI / packetsRCVD)
     }
     
 })

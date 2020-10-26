@@ -13,11 +13,11 @@ def on_received_value(name, value):
         rssi = radio.received_packet(RadioPacketProperty.SIGNAL_STRENGTH)
         packetsRCVD = packetsRCVD + 1
         sumRSSI = sumRSSI+rssi
-        serial.write_value("SUCCESS %", packetsRCVD/value)
+        serial.write_line("SUXS " + str(packetsRCVD/1000) + " RSSI(AVG):"+str(sumRSSI/packetsRCVD))
     elif name=="ENDSYNC":
-        serial.write_line("")
-        serial.write_value("SUCCESS RATE", packetsRCVD/1000)
-        serial.write_value("AVERAGE RSSI", sumRSSI/packetsRCVD)
+        serial.write_line("SR:"+str(packetsRCVD/1000)+" PCK:"+str(packetsRCVD)+" RSSI:"+sumRSSI/packetsRCVD)
+#        serial.write_value("SUCCESS RATE", packetsRCVD/1000)
+#        serial.write_value("AVERAGE RSSI", sumRSSI/packetsRCVD)
 
 radio.on_received_value(on_received_value)
 
