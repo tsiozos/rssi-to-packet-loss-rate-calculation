@@ -8,6 +8,7 @@ radio.onReceivedValue(function on_received_value(name: string, value: number) {
     if (name == "RST") {
         packetsRCVD = 0
         sumRSSI = 0
+        serial.writeLine("RESET")
     } else if (name == "SYNC") {
         rssi = radio.receivedPacket(RadioPacketProperty.SignalStrength)
         packetsRCVD = packetsRCVD + 1
@@ -25,19 +26,19 @@ input.onButtonPressed(Button.AB, function on_button_pressed_ab() {
     for (i = 0; i < 10; i++) {
         basic.showNumber(9 - i)
     }
-    basic.pause(1000)
+    // basic.pause(1000)
     basic.clearScreen()
     for (i = 0; i < 100; i++) {
         radio.sendValue("RST", 0)
+        basic.pause(50)
     }
-    basic.pause(50)
     for (i = 0; i < 1000; i++) {
         radio.sendValue("SYNC", i)
+        led.toggle(2, 2)
+        basic.pause(100)
     }
-    led.toggle(2, 2)
-    basic.pause(100)
     for (i = 0; i < 100; i++) {
         radio.sendValue("ENDSYNC", 0)
+        basic.pause(50)
     }
-    basic.pause(50)
 })
