@@ -6,6 +6,7 @@ let sumRSSI = 0
 //         serial.write_value("AVERAGE RSSI", sumRSSI/packetsRCVD)
 radio.onReceivedValue(function on_received_value(name: string, value: number) {
     let rssi: number;
+    //  this executed by RECEIVER
     
     if (name == "RST") {
         packetsRCVD = 0
@@ -23,6 +24,7 @@ radio.onReceivedValue(function on_received_value(name: string, value: number) {
 })
 input.onButtonPressed(Button.AB, function on_button_pressed_ab() {
     let i: number;
+    //  this executed by transmitter
     for (i = 0; i < 10; i++) {
         basic.showNumber(9 - i)
     }

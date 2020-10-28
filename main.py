@@ -3,7 +3,7 @@ radio.set_group(99)
 packetsRCVD = 0
 sumRSSI = 0
 
-def on_received_value(name, value):
+def on_received_value(name, value):     # this executed by RECEIVER
     global packetsRCVD, sumRSSI
     if name=="RST":
         packetsRCVD = 0
@@ -21,7 +21,7 @@ def on_received_value(name, value):
 
 radio.on_received_value(on_received_value)
 
-def on_button_pressed_ab():
+def on_button_pressed_ab():         # this executed by transmitter
     for i in range(10):
         basic.show_number(9-i)
         #basic.pause(1000)
